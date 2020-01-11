@@ -19,7 +19,7 @@ button {
     border-bottom: 1px solid #eee;
 }
 
-.message-container > div:nth-child(odd) {
+.message-container > div.sender {
     background-color: #dcf8c6;
 }
 
@@ -28,6 +28,7 @@ button {
     border-radius: 5px;
     box-shadow: 0 1px 0.5px rgba(0,0,0,.13);
     font-size: 12px;
+    margin: 5px 0px;
 }
 
 .timestamp {
