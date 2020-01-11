@@ -1,16 +1,3 @@
-var uuid = null;
-
-function createGuid() {
-  return (
-    Math.random()
-      .toString(36)
-      .substring(2, 15) +
-    Math.random()
-      .toString(36)
-      .substring(2, 15)
-  );
-}
-
 function setCookie(key, uuid, exdays) {
   const d = new Date();
   d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
@@ -36,7 +23,7 @@ function getCookie(uuid) {
 (function checkCookie() {
   let user = getCookie("username");
   if (user === "") {
-    user = createGuid();
+    user = createID();
     if (user !== "" && user != null) {
       setCookie("username", user, 365);
     }

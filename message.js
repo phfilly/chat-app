@@ -12,12 +12,15 @@ function init() {
 }
 
 function getMessages(contactId) {
-  fetch(`messages.php?uuid=${uuid}&from_user=${contactId}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
+  fetch(
+    `controllers/messageController.php?uuid=${uuid}&from_user=${contactId}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
     }
-  })
+  )
     .then(response => response.json())
     .then(response => buildMessages(response, contactId))
     .catch(() => {
@@ -59,7 +62,7 @@ function sendMessage() {
     from: uuid
   };
 
-  fetch("messages.php", {
+  fetch("controllers/messageController.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -74,6 +77,7 @@ function sendMessage() {
     });
 }
 
+// Implemented for ease of use
 var sendMessageBtn = document.getElementById("message");
 sendMessageBtn.addEventListener("keyup", event => {
   if (event.keyCode === 13) {

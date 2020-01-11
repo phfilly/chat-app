@@ -1,5 +1,5 @@
 <?php
-    include "connect.php";
+    include "../controllers/connect.php";
     try {
       $sql = "
         CREATE TABLE IF NOT EXISTS MESSAGES 
@@ -10,7 +10,6 @@
         TIME DATETIME DEFAULT CURRENT_TIMESTAMP)";
       
       $ret = $db->exec($sql);
-      echo $ret;
       echo "Database created successfully!";
 
     } catch (PDOException  $e) {

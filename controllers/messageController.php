@@ -1,40 +1,48 @@
 <?php
-    header("Access-Control-Allow-Origin: *");
-    header("Content-Type: application/json; charset=UTF-8");
-    
-    try {
-
-      if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        retrieveMessages();
-      } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        saveMessage();
-      } else {
-        errorResponse();
-      }
-      
-    } catch (PDOException  $e) {
-      return errorResponse();
+  header("Access-Control-Allow-Origin: *");
+  header("Content-Type: application/json; charset=UTF-8");
+  
+  try {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+      retrieveMessages();
+    } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      saveMessage();
+    } else {
+      errorResponse();
     }
+    
+  } catch (PDOException  $e) {
+    return errorResponse();
+  }
 
   $db = null;
 
   function saveMessage() {
-    include "connect.php";
+    include "../database/connect.php";
     $data = json_decode(file_get_contents("php://input"));
 
     if (!empty($data->message) && !empty($data->to) && !empty($data->from)) {
       $data->message = htmlspecialchars(strip_tags($data->message));
+      $sql = "INSERT INTO MESSAGES (FROM_USER, MESSAGE, TO_USER) VALUES (?,?,?)";
+      $query = $db->prepare($sql);
 
-      $query = "INSERT INTO MESSAGES (FROM_USER, MESSAGE, TO_USER) VALUES ('$data->from', '$data->message', '$data->to')";
-      $db->exec($query);
-      http_response_code(201);
+      if ($query) {
+        $query->bindValue(1, $data->from);
+        $query->bindValue(2, $data->message);
+        $query->bindValue(3, $data->to);
+        $query->execute();
+        http_response_code(201);
+      } else {
+        throw new Exception('empty data');
+      }
+
     } else {
       throw new Exception('empty data');
     }
   }
 
   function retrieveMessages() {
-    include "connect.php";
+    include "../database/connect.php";
     $data = json_decode(file_get_contents("php://input"));
 
     if ($_GET['from_user'] === $_GET['uuid']) {
