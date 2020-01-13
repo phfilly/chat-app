@@ -1,6 +1,6 @@
 # Simple PHP Chat app
 
-A small PHP app that allows for messages between users
+A small PHP app that allows for HTTP messages between users
 
 For storage this app makes use of a sqlite db for the saving and retrieval of messages. 
 
