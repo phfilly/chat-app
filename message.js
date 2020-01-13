@@ -9,6 +9,7 @@ function init() {
       respondWith("Please fill in contact id or name");
     }
   }, 2500);
+  document.getElementById("uuid").innerHTML = uuid;
 }
 
 function getMessages(contactId) {

@@ -1,1 +1,1 @@
-# chat-app
+# Simple PHP Chat app

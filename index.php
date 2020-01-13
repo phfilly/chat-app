@@ -25,6 +25,7 @@
     <div class="controls">
       <input id="message" size="40" placeholder="Your message here">
       <button id="sendMessage" onClick="sendMessage()">Send</button>
+      <div class="user-id">Your id:<span id="uuid"></span></div>
     </div>
   </div>
 

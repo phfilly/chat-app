@@ -18,7 +18,7 @@
   $db = null;
 
   function saveMessage() {
-    include "../database/connect.php";
+    include "connect.php";
     $data = json_decode(file_get_contents("php://input"));
 
     if (!empty($data->message) && !empty($data->to) && !empty($data->from)) {
@@ -42,7 +42,7 @@
   }
 
   function retrieveMessages() {
-    include "../database/connect.php";
+    include "connect.php";
     $data = json_decode(file_get_contents("php://input"));
 
     if ($_GET['from_user'] === $_GET['uuid']) {
