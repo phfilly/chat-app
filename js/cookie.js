@@ -24,6 +24,7 @@ function getCookie(uuid) {
   let user = getCookie("username");
   if (user === "") {
     user = createID();
+    uuid = user;
     if (user !== "" && user != null) {
       setCookie("username", user, 365);
     }

@@ -28,12 +28,14 @@ class BaseController
         $this->db = $this->db->connect();
     }
 
-    protected function getDBConnection() {
+    protected function getDBConnection()
+    {
         $this->connect();
         return $this->db;
     }
 
-    protected function resetConnection() {
+    protected function resetConnection()
+    {
         $this->db = null;
     }
 }

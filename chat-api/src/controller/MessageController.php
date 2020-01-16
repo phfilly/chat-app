@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use PDO;
 use App\Controller\ResponseController;
+use App\Constants\HttpResponse;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use Slim\Container;
 
-class MessageController extends ResponseController {
+class MessageController extends ResponseController
+{
     private $request;
     private $response;
 
@@ -30,13 +32,21 @@ class MessageController extends ResponseController {
         return 'INSERT INTO MESSAGES (FROM_USER, MESSAGE, TO_USER) VALUES (?,?,?)';
     }
 
+    private function isUserIdUnique(String $from_user, String $uuid): bool
+    {
+        if ($from_user === $uuid || empty($from_user) || empty($uuid)) {
+            return false;
+        }
+        return true;
+    }
+
     public function getMessages()
     {
         $from_user = $this->request->getQueryParam('from_user');
         $uuid = $this->request->getQueryParam('uuid');
 
-        if ($from_user === $uuid || empty($from_user) || empty($uuid)) {
-            $this->respondWith(405, "An Error Occurred", "failed", $this->response);
+        if (!$this->isUserIdUnique($from_user, $uuid)) {
+            return $this->respondWith(405, "An Error Occurred", HttpResponse::NOT_ALLOWED, $this->response);
         }
 
         try {
@@ -52,14 +62,14 @@ class MessageController extends ResponseController {
                 $data = $query->fetchAll(PDO::FETCH_ASSOC);
 
                 $this->resetConnection();
-                $this->respondWith(200, $data, "success", $this->response);
+                $this->respondWith(200, $data, HttpResponse::SUCCESS, $this->response);
             } else {
                 $this->resetConnection();
-                $this->respondWith(201, array(), "success", $this->response);
+                $this->respondWith(201, array(), HttpResponse::SUCCESS, $this->response);
             }
         } catch (Exception $e) {
             $this->resetConnection();
-            $this->respondWith(400, "An Error Occurred", "failed", $this->response);
+            $this->respondWith(400, "An Error Occurred", HttpResponse::BAD_REQUEST, $this->response);
         }
     }
 
@@ -68,6 +78,10 @@ class MessageController extends ResponseController {
         $message = $this->request->getParam('message');
         $to = $this->request->getParam('to');
         $from = $this->request->getParam('from');
+
+        if (!$this->isUserIdUnique($from, $to)) {
+            return $this->respondWith(405, "An Error Occurred", HttpResponse::NOT_ALLOWED, $this->response);
+        }
 
         try {
             if (!empty($message) && !empty($to) && !empty($from)) {
@@ -83,17 +97,17 @@ class MessageController extends ResponseController {
                     $query->execute();
 
                     $this->resetConnection();
-                    $this->respondWith(201, array(), "success", $this->response);
+                    $this->respondWith(201, array(), HttpResponse::SUCCESS, $this->response);
                 } else {
                     $this->resetConnection();
-                    $this->respondWith(400, "An Error Occurred", "failed", $this->response);
+                    $this->respondWith(400, "An Error Occurred", HttpResponse::BAD_REQUEST, $this->response);
                 }
             } else {
                 throw new Exception("An Error Occurred");
             }
         } catch (Exception $e) {
             $this->resetConnection();
-            $this->respondWith(400, "An Error Occurred", "failed", $this->response);
+            $this->respondWith(400, "An Error Occurred", HttpResponse::BAD_REQUEST, $this->response);
         }
     }
 }

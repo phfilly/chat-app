@@ -4,7 +4,8 @@ namespace App\Controller;
 
 use \Psr\Http\Message\ResponseInterface as Response;
 
-class ResponseController extends BaseController {
+class ResponseController extends BaseController
+{
     private $statusCode;
     private $data;
 
