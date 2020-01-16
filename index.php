@@ -2,11 +2,10 @@
 <html lang="en">
 
 <head>
-  <base href="/">
   <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
-  <script src="userId.js" type="text/javascript"></script>
-  <script src="cookie.js" type="text/javascript"></script>
+  <link href="./css/style.css" rel="stylesheet">
+  <script src="./js/userId.js" type="text/javascript"></script>
+  <script src="./js/cookie.js" type="text/javascript"></script>
   <meta charset="utf-8">
   <title>Chat App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,7 +28,7 @@
     </div>
   </div>
 
-  <script src="message.js" type="text/javascript"></script>
+  <script src="./js/message.js" type="text/javascript"></script>
 </body>
 
 </html>

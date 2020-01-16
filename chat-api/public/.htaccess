@@ -1,0 +1,15 @@
+
+  RewriteEngine On
+
+  Header add Access-Control-Allow-Origin "*"
+
+  Header add Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT"
+
+  Header add Access-Control-Allow-Headers: "Content-Type"
+
+  RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
+  RewriteRule ^(.*) - [E=BASE:%1]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^ index.php [QSA,L]
+

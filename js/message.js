@@ -1,3 +1,4 @@
+var apiURL = "http://chat-api/api/messages";
 init();
 
 function init() {
@@ -13,17 +14,14 @@ function init() {
 }
 
 function getMessages(contactId) {
-  fetch(
-    `controllers/messageController.php?uuid=${uuid}&from_user=${contactId}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
+  fetch(`${apiURL}?uuid=${uuid}&from_user=${contactId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
     }
-  )
+  })
     .then(response => response.json())
-    .then(response => buildMessages(response, contactId))
+    .then(response => buildMessages(response["message"], contactId))
     .catch(() => {
       document.getElementById("message-history").innerHTML =
         "An error occurred";
@@ -63,7 +61,7 @@ function sendMessage() {
     from: uuid
   };
 
-  fetch("controllers/messageController.php", {
+  fetch(apiURL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
