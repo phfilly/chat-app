@@ -4,15 +4,18 @@
 
 ## *Please note*
 
-The API url should be updated according to how your vhosts file might look like for the SLIM app (chat-api) dir. This can be found in the `/js/message.js` file. At the top there's a variable called `apiURL`. 
+*The API url should be updated according to how your vhosts file might look like for the SLIM app (chat-api) dir _or_ the URL on which you decide to host the PHP app. The URL variable can be found in the `/js/message.js` file. At the top there's a variable called `apiURL`.*
 
-A small PHP app that's built on top of the SLIM framework, which allows for elegant routing and usage of the PHP Request and Response classes
+Lastly, please install `composer install` in the `chat-api/` directory before starting up the app :)
 
-There's an implementation of the Interface Segregation and Dependency Inversion Principle in the Database class which depends upon a DbInterface abstraction.
+A small PHP app that's built on top of the SLIM PHP framework, which allows for elegant HTTP routing and usage of the PHP Request, Response classes and PSR-7 support.
 
-Same for in my controllers where I created a `BaseController` which implements 'prettifying json' and database connection management. This is inherited by `ResponseController` and `MessageController` to show a bit of Open/Closed and Single Responsibility Principle.
+There's an implementation of the Interface Segregation and Dependency Inversion Principle in the Database class, this class depends on the DbInterface abstraction.
+
+This goes for my controllers too - where I created a `BaseController` which implements 'prettifying json' and database connection management. This is inherited by `ResponseController` and `MessageController` to show a bit of Open/Closed and Single Responsibility Principles.
 
 # Version 1
+
 A small PHP app that allows for HTTP messages between users
 
 For storage this app makes use of a sqlite db for the saving and retrieval of messages. 
