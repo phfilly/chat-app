@@ -5,7 +5,6 @@ use App\Controller\MessageController;
 use App\Controller\ResponseController;
 use App\Constants\HttpResponse;
 
-$app = new \Slim\App;
 $app->get('/api/messages', function (Request $request, Response $response, array $args) {
     $message = new MessageController($request, $response);
     $message->getMessages();

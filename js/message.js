@@ -36,10 +36,9 @@ function buildMessages(response, contactId) {
   } else {
     response.forEach(data => {
       const content = document.createElement("div");
-      const timestamp = new Date(Date.parse(data.TIME)).toISOString();
 
       uuid === data.FROM_USER ? content.classList.add("sender") : "";
-      content.innerHTML = `${data.MESSAGE} <div class="timestamp">${timestamp}</div>`;
+      content.innerHTML = `${data.MESSAGE} <div class="timestamp">${data.TIME}</div>`;
       messageContainer.appendChild(content);
     });
   }

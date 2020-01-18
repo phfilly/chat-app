@@ -21,7 +21,7 @@ class BaseController
         return json_encode($result, JSON_PRETTY_PRINT);
     }
 
-    // Connect to DB and save connection to variable
+    // Connect to DB and save connection to variable for future usage
     protected function connect()
     {
         $this->db = new db();

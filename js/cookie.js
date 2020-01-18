@@ -1,34 +1,33 @@
-function setCookie(key, uuid, exdays) {
-  const d = new Date();
-  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
-  const expires = `expires=${d.toUTCString()}`;
-  document.cookie = `${key}=${uuid};${expires};path=/`;
-}
-
-function getCookie(uuid) {
-  const name = `${uuid}=`;
-  const cookieString = document.cookie.split(";");
-  for (let i = 0; i < cookieString.length; i++) {
-    let c = cookieString[i];
-    while (c.charAt(0) == " ") {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
+function setID(uuid) {
+  if (uuid) {
+    localStorage.setItem(
+      "chat-app",
+      JSON.stringify({
+        uuid: uuid,
+        dateCreated: new Date()
+      })
+    );
   }
-  return "";
 }
 
-(function checkCookie() {
-  let user = getCookie("username");
-  if (user === "") {
-    user = createID();
-    uuid = user;
-    if (user !== "" && user != null) {
-      setCookie("username", user, 365);
+function getID(key) {
+  userObj = JSON.parse(localStorage.getItem(key));
+  if (userObj) {
+    return userObj["uuid"];
+  } else {
+    return "";
+  }
+}
+
+(function checkID() {
+  let userId = getID("chat-app");
+  if (userId === "") {
+    userId = createID();
+    uuid = userId;
+    if (userId !== "" && userId != null) {
+      setID(userId);
     }
   } else {
-    uuid = user;
+    uuid = userId;
   }
 })();
