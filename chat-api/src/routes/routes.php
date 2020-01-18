@@ -7,25 +7,11 @@ use App\Constants\HttpResponse;
 
 $app = new \Slim\App;
 $app->get('/api/messages', function (Request $request, Response $response, array $args) {
-    try {
-        $message = new MessageController($request, $response);
-        return $message->getMessages();
-    } catch (Exception  $e) {
-        return $response->withStatus(400)
-        ->withHeader('Content-Type', 'application/json')
-        ->withHeader('Access-Control-Allow-Origin', '*')
-        ->write(HttpResponse::SERVER_ERROR);
-    }
+    $message = new MessageController($request, $response);
+    $message->getMessages();
 });
 
 $app->post('/api/messages', function (Request $request, Response $response, array $args) {
-    try {
-        $message = new MessageController($request, $response);
-        return $message->saveMessage();
-    } catch (PDOException  $e) {
-        return $response->withStatus(400)
-            ->withHeader('Content-Type', 'application/json')
-            ->withHeader('Access-Control-Allow-Origin', '*')
-            ->write(HttpResponse::SERVER_ERROR);
-    }
+    $message = new MessageController($request, $response);
+    $message->saveMessage();
 });

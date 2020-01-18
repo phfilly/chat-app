@@ -62,14 +62,14 @@ class MessageController extends ResponseController
                 $data = $query->fetchAll(PDO::FETCH_ASSOC);
 
                 $this->resetConnection();
-                $this->respondWith(200, $data, HttpResponse::SUCCESS, $this->response);
+                return $this->respondWith(200, $data, HttpResponse::SUCCESS, $this->response);
             } else {
                 $this->resetConnection();
-                $this->respondWith(201, array(), HttpResponse::SUCCESS, $this->response);
+                return $this->respondWith(201, array(), HttpResponse::SUCCESS, $this->response);
             }
         } catch (Exception $e) {
             $this->resetConnection();
-            $this->respondWith(400, "An Error Occurred", HttpResponse::BAD_REQUEST, $this->response);
+            return $this->respondWith(500, "An Error Occurred", HttpResponse::SERVER_ERROR, $this->response);
         }
     }
 
@@ -97,17 +97,17 @@ class MessageController extends ResponseController
                     $query->execute();
 
                     $this->resetConnection();
-                    $this->respondWith(201, array(), HttpResponse::SUCCESS, $this->response);
+                    return $this->respondWith(201, array(), HttpResponse::SUCCESS, $this->response);
                 } else {
                     $this->resetConnection();
-                    $this->respondWith(400, "An Error Occurred", HttpResponse::BAD_REQUEST, $this->response);
+                    return $this->respondWith(400, "An Error Occurred", HttpResponse::BAD_REQUEST, $this->response);
                 }
             } else {
-                throw new Exception("An Error Occurred");
+                return $this->respondWith(400, "An Error Occurred", HttpResponse::BAD_REQUEST, $this->response);
             }
         } catch (Exception $e) {
             $this->resetConnection();
-            $this->respondWith(400, "An Error Occurred", HttpResponse::BAD_REQUEST, $this->response);
+            return $this->respondWith(500, "An Error Occurred", HttpResponse::SERVER_ERROR, $this->response);
         }
     }
 }
